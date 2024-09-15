@@ -7,7 +7,7 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.HomePage, name="home"),
+    path("", views.Dashboard, name="dashboard"),
     path("dashboard/", views.Dashboard, name="dashboard"),
     path("courses/", views.Courses, name="courses"),
     path("apply_course/", views.ApplyCourse, name="apply_course"),

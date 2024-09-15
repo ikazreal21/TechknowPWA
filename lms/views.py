@@ -70,3 +70,10 @@ def Announcement(request):
 
 def CourseAnnouncement(request):
     return render(request, 'lms/course_announcement.html')
+
+
+
+# 3D Game
+
+def Game(request):
+    return render(request, 'lms/game.html')
