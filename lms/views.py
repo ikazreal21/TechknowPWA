@@ -35,7 +35,7 @@ def Dashboard(request):
 def Courses(request):
     return render(request, 'lms/courses.html')
 
-def ApplyCouse(request):
+def ApplyCourse(request):
     return render(request, 'lms/apply_course.html')
 
 def Modules(request):
