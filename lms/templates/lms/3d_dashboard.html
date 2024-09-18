@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Smooth Bean Avatar with Better Unique Colors</title>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+            }
+            canvas {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="module">
+            // Import Three.js via import map
+            import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.module.js';
+
+            let scene, camera, renderer, beanAvatar;
+
+            // Helper function to generate a pseudo-random number from a string seed
+            function generateSeededRandom(seed) {
+                let h = 0;
+                for (let i = 0; i < seed.length; i++) {
+                    h = Math.imul(31, h) + seed.charCodeAt(i) | 0;
+                }
+                return () => (h = Math.imul(31, h) + 0x7fffffff & h) / 0x80000000;
+            }
+
+            // Function to generate a more vibrant color based on the seed
+            function generateUniqueColor(seededRandom, seed) {
+                seededRandom = generateSeededRandom(seed); // Generate a new seeded random number generator based on the seed
+                const r = 0.5 + seededRandom() * 0.5;  // Ensure the red channel is at least 0.5
+                const g = 0.5 + seededRandom() * 0.5;  // Ensure the green channel is at least 0.5
+                const b = 0.5 + seededRandom() * 0.5;  // Ensure the blue channel is at least 0.5
+                return new THREE.Color(r, g, b);
+            }
+
+            // Function to create a unique, smooth bean avatar based on user input (seed)
+            function createUniqueSmoothBeanAvatar(seed) {
+                const group = new THREE.Group();
+
+                // Create a seeded random number generator based on the seed (user input)
+                const seededRandom = generateSeededRandom(seed);
+
+                // Generate smooth bean geometry using LatheGeometry with more segments for smoothness
+                const points = [];
+                points.push(new THREE.Vector2(0.3, 0));        // Bottom of the bean
+                points.push(new THREE.Vector2(0.6, 0.2));      // Lower curve
+                points.push(new THREE.Vector2(0.7, 0.5));      // Middle
+                points.push(new THREE.Vector2(0.6, 0.8));      // Upper curve
+                points.push(new THREE.Vector2(0.3, 1));        // Top of the bean
+
+                const geometry = new THREE.LatheGeometry(points, 64); // Increase segments for smoothness
+
+                // Generate a more vibrant random color based on the seed
+                const color = generateUniqueColor(seededRandom, seed);
+                const material = new THREE.MeshStandardMaterial({ color, flatShading: false }); // Smooth shading
+                const beanMesh = new THREE.Mesh(geometry, material);
+                group.add(beanMesh);
+
+                // Add eyes to the bean (with slight randomness for size/position based on seed)
+                const eyeMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+                const eyeGeometry = new THREE.SphereGeometry(0.05 + seededRandom() * 0.02, 16, 16);
+
+                const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+                const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+
+                // Position eyes randomly but symmetrically based on the seed
+                leftEye.position.set(-0.2 - seededRandom() * 0.05, 0.6 + seededRandom() * 0.1, 0.6);
+                rightEye.position.set(0.2 + seededRandom() * 0.05, 0.6 + seededRandom() * 0.1, 0.6);
+
+                group.add(leftEye);
+                group.add(rightEye);
+
+                return group;
+            }
+
+            // Initialize the Three.js scene
+            function init(seed) {
+                // Scene
+                scene = new THREE.Scene();
+
+                // Camera
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 3;
+
+                // Renderer
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+
+                const pointLight = new THREE.PointLight(0xffffff, 1);
+                pointLight.position.set(2, 2, 2);
+                scene.add(pointLight);
+
+                // Create a unique smooth bean avatar based on the seed and add to the scene
+                beanAvatar = createUniqueSmoothBeanAvatar(seed);
+                scene.add(beanAvatar);
+
+                // Set a background image
+                setBackground();
+
+                // Add interactivity
+                document.addEventListener('click', onClick);
+                document.addEventListener('touchstart', onClick);
+
+                // Start rendering
+                renderer.render(scene, camera);
+            }
+
+            // Function to set a background image
+            function setBackground() {
+                const loader = new THREE.TextureLoader();
+                loader.load('https://i.imgur.com/vxgySQU.jpg', function (texture) {
+                    scene.background = texture; // Set the background texture
+                });
+            }
+
+            // Interactivity function to rotate the bean avatar on click/touch
+            function onClick() {
+                // Rotate avatar slightly on each click/touch
+                beanAvatar.rotation.y += Math.PI / 6;
+
+                // Optionally scale the avatar for a bounce effect
+                beanAvatar.scale.set(1.1, 1.1, 1.1);
+                setTimeout(() => {
+                    beanAvatar.scale.set(1, 1, 1);
+                }, 200);
+
+                // Re-render the scene
+                renderer.render(scene, camera);
+            }
+
+            // Resize renderer on window resize
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.render(scene, camera);
+            });
+
+            // Initialize the scene with a user-specific seed (e.g., username or ID)
+            const userSeed = 'ikazreal'; // Replace with actual unique user ID or name
+            init(userSeed);
+        </script>
+    </body>
+</html>
