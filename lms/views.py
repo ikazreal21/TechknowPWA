@@ -17,7 +17,7 @@ from django.db.models import Q
 from django.http import FileResponse
 
 import time
-
+from random import sample
 
 
 def Login(request):
@@ -56,10 +56,33 @@ def Logout(request):
 
 @login_required(login_url='login')
 def Dashboard(request):
-    Courses = Course.objects.all()
+    available_courses = []
+
+    StudentCourse = CourseToStudent.objects.filter(student_id=request.user.student_id, is_approved=True)
+
+    for i in StudentCourse:
+        get_course = Course.objects.get(course_code=i.course_code)
+        available_courses.append(get_course)
+
     global_announcement = GlobalAnnouncement.objects.all()
+
+    if request.method == 'POST':
+        course_code = request.POST.get('course_code')
+        student_id = request.user.student_id
+
+        is_exist = CourseToStudent.objects.get(course_code=course_code, student_id=student_id)
+
+        if is_exist:
+            return redirect('dashboard')
+        else:
+            CourseToStudent.objects.create(
+                ciurse_code=course_code,
+                student_id=student_id
+            )
+        return redirect('dashboard')
+
     context = {
-        'Courses': Courses,
+        'courses': available_courses,
         'global_announcement': global_announcement
     }
     return render(request, 'lms/dashboard.html', context)
@@ -78,26 +101,110 @@ def ApplyCourse(request, course_code):
             )
     return redirect('dashboard')
 
-def Modules(request):
-    return render(request, 'lms/modules.html')
+def Modules(request, course_code):
+    course = Course.objects.get(course_code=course_code)
+    modules = CourseModule.objects.filter(course=course)
+
+    context = {
+        'modules': modules
+    }
+
+    return render(request, 'lms/student/modules.html', context)
 
 def Profile(request):
-    return render(request, 'lms/profile.html')
+    if request.method == 'POST':
+        form = CustomUserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = CustomUserForm(instance=request.user)
+    context = {
+        'form': form
+    }
+    return render(request, 'lms/profile.html', context)
 
-def CourseDetail(request): 
-    return render(request, 'lms/course_detail.html')
+def CourseDetail(request, course_code):
+    course = Course.objects.get(course_code=course_code)
+    Announcement = CourseAnnouncement.objects.filter(course=course)
+
+    context = {
+        'announcements': Announcement,
+        'course': course
+    }
+    return render(request, 'lms/student/course_detail.html', context)
 
 def ModuleDetail(request):
     return render(request, 'lms/module_detail.html')
 
-def Quiz(request):
-    return render(request, 'lms/quiz.html')
+def Quizes(request, course_code):
+    course = Course.objects.get(course_code=course_code)
+    modules = Quiz.objects.filter(course=course).exclude(resultsquiz__student_id=request.user.student_id)
 
-def QuizResult(request):
-    return render(request, 'lms/quiz_result.html')
+    context = {
+        'quiz': modules
+    }
+    return render(request, 'lms/student/quizes.html', context)
 
-def MultiChoice(request):
-    return render(request, 'lms/multi_choice.html')
+def MultiChoice(request, quiz_id):
+    quiz = Quiz.objects.get(id=quiz_id)
+    all_questions = list(MultipleChoice.objects.all())
+    selected_questions = sample(all_questions, int(quiz.multiple_choice))
+    
+    request.session['multiplequestions_ids'] = [question.id for question in selected_questions]
+
+    print(selected_questions)
+    print(quiz.course.course_code)
+
+    context = {
+        'quiz': quiz,
+        'multiple_choices': selected_questions
+    }
+
+    return render(request, 'lms/student/multiple_choice_quiz.html', context)
+
+
+def SubmitQuiz(request, quiz_id):
+    quiz = Quiz.objects.get(id=quiz_id)
+    if request.method == 'POST':
+        correct_answers = 0
+        total_questions = quiz.multiple_choice
+
+        # Retrieve question IDs from session
+        question_ids = request.session.get('multiplequestions_ids', [])
+        questions = MultipleChoice.objects.filter(id__in=question_ids)
+
+        # Check each submitted answer
+        for idx, question in enumerate(questions, start=1):
+            user_answer = request.POST.get(f'answer_{question.id}')
+            if user_answer == question.answer:
+                correct_answers += 1
+
+        # Calculate score as a percentage
+        score = (correct_answers / total_questions) * 100
+        user = request.user
+        user.total_points += correct_answers
+        user.save()
+        
+        # Save the result
+        ResultsQuiz.objects.create(
+            student_id=request.user.student_id,
+            quiz=quiz,
+            score=score
+        )
+        
+        return render(request, 'lms/student/quiz_results.html', {'quiz': quiz, 'score': score})
+
+    return redirect('quiz_detail', quiz_id=quiz_id)
+
+def PastQuizzes(request):
+    modules = ResultsQuiz.objects.filter(student_id=request.user.student_id)
+
+    context = {
+        'quiz': modules
+    }
+    return render(request, 'lms/student/past_quiz.html', context)
+
 
 def TrueFalse(request):
     return render(request, 'lms/true_false.html')
@@ -105,14 +212,39 @@ def TrueFalse(request):
 def FillBlank(request):
     return render(request, 'lms/fill_blank.html')
 
-def Announcement(request):
-    return render(request, 'lms/announcement.html')
+def QuizResult(request):
+    return render(request, 'lms/quiz_result.html')
 
-def CourseAnnouncement(request):
-    return render(request, 'lms/course_announcement.html')
+
+
+
+ROOMS = [
+    (0, 'https://prod.spline.design/KSbWsM0OwrLYXyOO/scene.splinecode'),  # Basic Room
+    (10, 'https://prod.spline.design/jL-hTvDQzuYPLpMf/scene.splinecode'),  # Only the PC
+    (20, 'https://prod.spline.design/TJuTzrNT-TH0Z0sA/scene.splinecode'),  # No Music Box
+    (30, 'https://prod.spline.design/BqtzOQtZajRZxXRV/scene.splinecode'),  # No Wall Deco
+    (40, 'https://prod.spline.design/vHHH2LASfpWCrHXR/scene.splinecode'),  # No Trash and Speaker
+    (50, 'https://prod.spline.design/a6qDWrFOtZ2DfsQh/scene.splinecode'),  # No Floor Deco
+    (60, 'https://prod.spline.design/YpN1FUAW-5cAoYnP/scene.splinecode'),  # No Guitar
+    (70, 'https://prod.spline.design/x-tRQs8TXauYtNgB/scene.splinecode'),  # No Chair Room
+    (80, 'https://prod.spline.design/WC-O8efiVZxocK7P/scene.splinecode'),  # No Lamp Room
+    (90, 'https://prod.spline.design/a7GTFzRLRz6DkNfd/scene.splinecode')   # Finish Room
+]
 
 
 
 # 3D Game
 def Game3D(request):
-    return render(request, 'lms/game.html')
+    total_points = request.user.total_points
+
+    # Determine the room to display based on total points
+    room_url = ROOMS[0][1]  # Default to Basic Room
+    for points, url in ROOMS:
+        if total_points >= points:
+            room_url = url
+
+    context = {
+        'room_url': room_url,
+        'total_points': total_points
+    }
+    return render(request, 'lms/3d/game.html', context)

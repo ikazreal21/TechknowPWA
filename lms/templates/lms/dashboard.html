@@ -16,28 +16,39 @@
       <div class="card col-lg-12 px-0 mb-4">
         <div class="card-body">
           <h5 class="card-title">Courses</h5>
-          <a href="" class="btn btn-primary mr-2">Add Course</a>
+          <form class="forms-sample" method="POST">
+            {% csrf_token  %}
+              <div class="form-group">
+                <input type="text" class="form-control p_input" placeholder="Course Code" name="course_code" >
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-2">Add Course</button>
+              </div>
+          </form>
         </div>
       </div>
     </div>
+    {% for i in courses  %}
     <div class="card-deck">
       <div class="card col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" style="min-height:395px;">
         <div class="card-body">
-          <h5 class="card-title mb-4">Course Name</h5>
+          <h5 class="card-title mb-4">{{i.name | title }}</h5>
           <div class="row d-flex align-items-center justify-items-center flex-column">
             <div class="text-center">
-              <img src="{% static 'images/faces/face8.jpg' %} " width="400" height="400" />
+              <img src="{{i.image.url}}" width="200" height="200" />
             </div>
             <!-- <div class="text-center mt-3">
               <i class="fa fa-quote-right icon-grey-big"></i>
             </div> -->
             <p class="font-italic text-muted mt-3 mb-4 text-center">
-              Description
+              {{i.description }}
             </p>
-            <a href="" class="btn btn-info mr-2">View Course</a>
+            <a href="{% url 'course_details' i.course_code %}" class="btn btn-info mr-2">View Course</a>
           </div>
         </div>
       </div>
     </div>
+    {% endfor  %}
+
 </div>
 {% endblock %}

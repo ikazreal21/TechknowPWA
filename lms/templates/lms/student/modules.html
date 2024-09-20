@@ -1,0 +1,32 @@
+{% extends 'lms/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Modules</h5>
+        </div>
+      </div>
+    </div>
+    {% for i in modules %}
+        <div class="card-deck">
+            <div class="card col-lg-12 px-0 mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{i.name | title}}</h5>
+                <p>{{i.description}}</p>
+                {% if i.is_active %}
+                <a href="{{i.module_file.url}}" target="_blank" class="btn btn-primary mr-2">View Module</a>
+                {% else %}
+                <a href="" target="_blank" class="btn btn-primary mr-2 disabled">Locked Module</a>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

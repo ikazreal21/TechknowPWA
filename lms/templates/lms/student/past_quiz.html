@@ -1,0 +1,27 @@
+{% extends 'lms/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Past Quizzes</h5>
+        </div>
+      </div>
+    </div>
+    {% for i in quiz %}
+        <div class="card-deck">
+            <div class="card col-lg-12 px-0 mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{i.quiz.name | title}}</h5>
+                <p>Score: {{i.score}}%</p>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

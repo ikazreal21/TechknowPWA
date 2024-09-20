@@ -26,6 +26,7 @@ class CustomUser(AbstractUser):
     birth_date = models.CharField(max_length=50, null=True, blank=True)
     student_id = models.CharField(max_length=50, null=True, blank=True)
     image = models.ImageField(upload_to='uploads/profile', blank=True, null=True)
+    total_points = models.IntegerField(default=0)
     is_student = models.BooleanField(default=False)
 
 
@@ -46,6 +47,7 @@ class Course(models.Model):
 class CourseToStudent(models.Model):
     course_code = models.CharField(max_length=50, null=True, blank=True)
     student_id = models.CharField(max_length=50, null=True, blank=True)
+    points = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -123,6 +125,9 @@ class Quiz(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+    def total_questions(self):
+        return self.multiple_choice + self.true_false + self.fill_in_the_blank
     
     class Meta:
         verbose_name_plural = "Quizzes"

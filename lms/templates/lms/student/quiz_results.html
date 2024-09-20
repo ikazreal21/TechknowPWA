@@ -1,0 +1,12 @@
+{% extends 'lms/base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="content-wrapper">
+    <h3 class="page-heading mb-4">{{ quiz.name }} - Result</h3>
+    <p>Your score is: {{ score }}%</p>
+    <a href="{% url 'quiz' quiz.course.course_code %}" class="btn btn-primary">Return</a>
+</div>
+
+{% endblock %}

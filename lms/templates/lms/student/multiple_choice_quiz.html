@@ -1,0 +1,47 @@
+{% extends 'lms/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <h3 class="page-heading mb-4">{{ quiz.title }}</h3>
+    <form method="POST" action="{% url 'submit_quiz' quiz.id %}">
+        {% csrf_token %}
+        {% for choice in multiple_choices %}
+        <div class="card mb-3">
+            <div class="card-body">
+            <h5 class="card-title">{{ choice.question }}</h5>
+            <div class="form-group">
+                <div class="form-radio">
+                <label class="form-radio-label">
+                    <input class="form-radio-input" type="radio" name="answer_{{ forloop.counter }}" value="{{ choice.option1 }}" required>
+                    {{ choice.option1 }}
+                </label>
+                </div>
+                <div class="form-radio">
+                <label class="form-radio-label">
+                    <input class="form-radio-input" type="radio" name="answer_{{ forloop.counter }}" value="{{ choice.option2 }}" required>
+                    {{ choice.option2 }}
+                </label>
+                </div>
+                <div class="form-radio">
+                <label class="form-radio-label">
+                    <input class="form-radio-input" type="radio" name="answer_{{ forloop.counter }}" value="{{ choice.option3 }}" required>
+                    {{ choice.option3 }}
+                </label>
+                </div>
+                <div class="form-radio">
+                <label class="form-radio-label">
+                    <input class="form-radio-input" type="radio" name="answer_{{ forloop.counter }}" value="{{ choice.option4 }}" required>
+                    {{ choice.option4 }}
+                </label>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-block enter-btn">Submit Quiz</button>
+    </form>
+</div>
+
+{% endblock %}

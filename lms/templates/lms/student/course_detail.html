@@ -1,0 +1,41 @@
+{% extends 'lms/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper" style="text-align: center;">
+    {% for announcement in announcements %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>{{announcement.title | title}}</strong> {{announcement.description}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Modules</h5>
+          <a href="{% url 'modules' course.course_code %}" class="btn btn-primary mr-2">View Modules</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+        <div class="card col-lg-12 px-0 mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Quiz</h5>
+            <a href="{% url 'quiz' course.course_code %}" class="btn btn-primary mr-2">View Quiz</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-deck">
+        <div class="card col-lg-12 px-0 mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Activities</h5>
+            <a href="" class="btn btn-primary mr-2">View Activities</a>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}
