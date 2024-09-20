@@ -1,49 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        /* Ensure the viewer takes full width and height, and scales properly */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
+{% extends 'lms/base.html' %} 
 
-        spline-viewer {
-            display: block;
-            width: 100vw;
-            height: 100vh; /* Full height on any screen size */
-        }
+{% load static %} 
+{% block content %} 
 
-        @media (max-width: 768px) {
-            spline-viewer {
-                height: 100vh; /* Full height for mobile screens */
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Finish Room -->
-    <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
-    <spline-viewer hint loading-anim-type="spinner-small-dark" url="https://prod.spline.design/a7GTFzRLRz6DkNfd/scene.splinecode"></spline-viewer> -->
-
-    <!-- No Lamp Room -->
-    <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
-    <spline-viewer hint loading-anim-type="spinner-small-dark" url="https://prod.spline.design/WC-O8efiVZxocK7P/scene.splinecode"></spline-viewer> -->
-
-    <!-- No Chair Room -->
-    <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
-    <spline-viewer hint loading-anim-type="spinner-small-dark" url="https://prod.spline.design/x-tRQs8TXauYtNgB/scene.splinecode"></spline-viewer> -->
-
-    <!-- No Guitar -->
-    <!-- <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
-    <spline-viewer hint loading-anim-type="spinner-small-dark" url="https://prod.spline.design/YpN1FUAW-5cAoYnP/scene.splinecode"></spline-viewer> -->
-
-    
-</body>
-</html>
+<div class="content-wrapper">
+    {% for announcement in global_announcement %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>{{announcement.title | title}}</strong> {{announcement.description}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Courses</h5>
+          <a href="" class="btn btn-primary mr-2">Add Course</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+      <div class="card col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" style="min-height:395px;">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Course Name</h5>
+          <div class="row d-flex align-items-center justify-items-center flex-column">
+            <div class="text-center">
+              <img src="{% static 'images/faces/face8.jpg' %} " width="400" height="400" />
+            </div>
+            <!-- <div class="text-center mt-3">
+              <i class="fa fa-quote-right icon-grey-big"></i>
+            </div> -->
+            <p class="font-italic text-muted mt-3 mb-4 text-center">
+              Description
+            </p>
+            <a href="" class="btn btn-info mr-2">View Course</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

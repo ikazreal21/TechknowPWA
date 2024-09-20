@@ -10,7 +10,7 @@ urlpatterns = [
     path("", views.Dashboard, name="dashboard"),
     path("dashboard/", views.Dashboard, name="dashboard"),
     path("courses/", views.Courses, name="courses"),
-    path("apply_course/", views.ApplyCourse, name="apply_course"),
+    path("apply_course/<str:course_code>", views.ApplyCourse, name="apply_course"),
     path("modules/", views.Modules, name="modules"),
     path("profile/", views.Profile, name="profile"),
     path("course_detail/", views.CourseDetail, name="course_detail"),
@@ -19,6 +19,9 @@ urlpatterns = [
     path("quiz_result/", views.QuizResult, name="quiz_result"),\
     path("announcement/", views.Announcement, name="announcement"),
     path("course_announcement/", views.CourseAnnouncement, name="course_announcement"),
+
+    # 3D Game
+    path("3d_game/", views.Game3D, name="3d_game"),
     
 
 

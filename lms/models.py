@@ -71,6 +71,9 @@ class GlobalAnnouncement(models.Model):
     def __str__(self):
         return f"{self.title}"
     
+    class Meta:
+        ordering = ['-created_at']
+    
 class CourseAnnouncement(models.Model):
     title = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField()
@@ -121,6 +124,9 @@ class Quiz(models.Model):
     def __str__(self):
         return f"{self.name}"
     
+    class Meta:
+        verbose_name_plural = "Quizzes"
+    
 class ResultsQuiz(models.Model):
     student_id = models.CharField(max_length=50)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True, blank=True)
@@ -130,11 +136,20 @@ class ResultsQuiz(models.Model):
     def __str__(self):
         return f"{self.student_id} - {self.quiz} - {self.score}"
     
-class GameCharacter(models.Model):
+# class GameCharacter(models.Model):
+#     name = models.CharField(max_length=50)
+#     image = models.ImageField(upload_to='uploads/character', blank=True, null=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='game_character_created_by')
+
+#     def __str__(self):
+#         return f"{self.name}"
+
+class ThreeDRoom(models.Model):
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='uploads/character', blank=True, null=True)
+    image = models.ImageField(upload_to='uploads/3droom', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='game_character_created_by')
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}"

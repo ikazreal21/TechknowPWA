@@ -21,13 +21,24 @@
         <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
           <div class="card col-lg-4 mx-auto">
             <div class="card-body px-5 py-5">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor %}
+              {% endif %}
               <h3 class="card-title text-left mb-3">Login</h3>
-              <form>
+              <form method="POST">
+                {% csrf_token  %}
                 <div class="form-group">
-                  <input type="text" class="form-control p_input" placeholder="Username">
+                  <input type="text" class="form-control p_input" placeholder="Username" name="username">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control p_input" placeholder="Password">
+                  <input type="password" class="form-control p_input" placeholder="Password" name="password">
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn">LOG IN</button>

@@ -19,24 +19,38 @@
         <div class="container-fluid">
           <div class="row">
             <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
+              <!-- <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Welcome to our system!</strong> This is a banner with a design similar to the current system.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div> -->
               <div class="card col-lg-4 mx-auto">
                 <div class="card-body px-5 py-5">
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
                   <h3 class="card-title text-left mb-3">Register</h3>
-                  <form>
+                  <form method="POST">
+                    {% csrf_token  %}
                     <div class="form-group">
-                      <input type="text" class="form-control p_input" placeholder="Username">
+                      <input type="text" class="form-control p_input" placeholder="Username" name="username">
                     </div>
                     <div class="form-group">
-                      <input type="email" class="form-control p_input" placeholder="Email">
+                      <input type="password" name="password1" class="form-control p_input" placeholder="Password">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control p_input" placeholder="Password">
+                      <input type="password" name="password2" class="form-control p_input" placeholder="Repeat Password">
                     </div>
-                    <!-- <div class="form-group">
-                      <input type="password" class="form-control p_input" placeholder="Repeat Password">
-                    </div> -->
                     <div class="form-group d-flex align-items-center justify-content-between">
-                      <div class="form-check"><label><input type="checkbox" class="form-check-input">I Agree to the Terms & conditions</label></div>
+                      <div class="form-check"><label><input type="checkbox" class="form-check-input" required>I Agree to the Terms & conditions</label></div>
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary btn-block enter-btn">LOG IN</button>

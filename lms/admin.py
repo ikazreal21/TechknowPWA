@@ -51,6 +51,10 @@ admin.site.register(CourseAnnouncement)
 admin.site.register(GlobalAnnouncement)
 admin.site.register(Quiz)
 admin.site.register(MultipleChoice)
+admin.site.register(TrueFalse)
+admin.site.register(FillInTheBlank)
+admin.site.register(ResultsQuiz)
+admin.site.register(ThreeDRoom)
 
 
 admin.site.site_title = "LMS Admin"
