@@ -57,5 +57,5 @@ admin.site.register(ResultsQuiz)
 admin.site.register(ThreeDRoom)
 
 
-admin.site.site_title = "LMS Admin"
-admin.site.site_header = "LMS Admin"
+admin.site.site_title = "Techknow Admin"
+admin.site.site_header = "Techknow Admin"

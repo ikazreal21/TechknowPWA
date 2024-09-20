@@ -1,8 +1,10 @@
 from django.contrib.auth import views as auth_views
+from django.urls import re_path as url
 
 from django.urls import path
 from . import views
 
+from pwa.views import manifest, service_worker, offline
 
 
 
@@ -41,6 +43,13 @@ urlpatterns = [
     path("login/", views.Login, name="login"),
     path("register/", views.Register, name="register"),
     path("logout/", views.Logout, name="logout"),
+
+    # pwa
+    url(r'^serviceworker\.js$', service_worker, name='serviceworker'),
+    url(r'^manifest\.json$', manifest, name='manifest'),
+    url('^offline/$', offline, name='offline'),
+
+    path(".well-known/assetlinks.json", views.AssetLink),
 ]
 
 

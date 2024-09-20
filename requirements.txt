@@ -14,6 +14,7 @@ Django==4.2.7
 django-admin-interface==0.28.6
 django-admin-material-dashboard==1.0.10
 django-colorfield==0.11.0
+django-pwa==2.0.0
 django-storages==1.14.4
 djangorestframework==3.14.0
 drf-spectacular==0.26.5

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from .forms import *
@@ -248,3 +248,18 @@ def Game3D(request):
         'total_points': total_points
     }
     return render(request, 'lms/3d/game.html', context)
+
+
+def AssetLink(request):
+    assetlink = [
+        {
+            "relation": ["delegate_permission/common.handle_all_urls"],
+            "target": {
+            "namespace": "android_app",
+            "package_name": "xyz.appmaker.zacrfh",
+            "sha256_cert_fingerprints": ["0F:A1:A9:0E:25:08:3D:BD:60:BB:FC:5C:E4:76:BB:85:08:E6:C1:71:DF:21:C6:90:61:1D:28:A2:5D:88:C2:07"]
+            }
+        }
+    ]
+
+    return JsonResponse(assetlink, safe=False)

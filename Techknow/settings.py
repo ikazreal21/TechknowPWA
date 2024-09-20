@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
-    'lms'
+    'lms',
+    'pwa',
+    
 ]
 
 MIDDLEWARE = [
@@ -157,3 +159,37 @@ AWS_S3_USE_SSL = False
 
 
 MINIO_ACCESS_URL = "http://192.168.1.228:9012/techknow"
+
+
+PWA_APP_NAME = 'Techknow'
+PWA_APP_DESCRIPTION = "Gamified Learning Management System"
+PWA_APP_THEME_COLOR = '#1F3BB3'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = ''
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/android-launchericon-512-512.png',
+        'sizes': '512x512'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/images/512.png',
+        'sizes': '512x512'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/images/logo.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-PH'
+PWA_APP_DISPLAY_OVERRIDE = {
+    
+}
