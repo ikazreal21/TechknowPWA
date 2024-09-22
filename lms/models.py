@@ -6,7 +6,7 @@ import uuid
 
 from django.core.files.storage import FileSystemStorage
 from django.db import models
-
+from datetime import datetime
 
 
 def create_rand_id():
@@ -28,6 +28,16 @@ class CustomUser(AbstractUser):
     image = models.ImageField(upload_to='uploads/profile', blank=True, null=True)
     total_points = models.IntegerField(default=0)
     is_student = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
+
+    def date(self):
+        try:
+            # Convert the birth_date string to a datetime object
+            date_obj = datetime.strptime(self.birth_date, "%Y-%m-%d")
+            # Format it to 'Month day, Year' (e.g., 'September 21, 2024')
+            return date_obj.strftime("%B %d, %Y")
+        except ValueError:
+            return self.birth_date
 
 
 class Course(models.Model):
@@ -135,6 +145,7 @@ class Quiz(models.Model):
 class ResultsQuiz(models.Model):
     student_id = models.CharField(max_length=50)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True, blank=True)
+    course_code = models.CharField(max_length=50)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 

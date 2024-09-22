@@ -1,0 +1,72 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Techknow</title>
+  <link rel="stylesheet" href="{% static 'node_modules/font-awesome/css/font-awesome.min.css'  %}" />
+  <link rel="stylesheet" href="{% static 'node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css'  %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css'  %}" />
+  <link rel="shortcut icon" href="{% static 'images/logo.png'  %}" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center text-center error-page">
+        {% if no_student_id %}
+          <div class="col-lg-6 mx-auto">
+            <h1 class="display-1 mb-0">Error!</h1>
+            <h2 class="mb-4">Applied for the Course Error!</h2>
+            <p>No Student ID you need to put your Student ID on the Profile</p>
+          </div>
+        {% elif course_not_exist %}
+          <div class="col-lg-6 mx-auto">
+            <h1 class="display-1 mb-0">Error!</h1>
+            <h2 class="mb-4">Applied for the Course Error!</h2>
+            <p>Course not Exist</p>
+          </div>
+        {% elif already_applied %}
+          <div class="col-lg-6 mx-auto">
+            <h1 class="display-1 mb-0">Error!</h1>
+            <h2 class="mb-4">Applied for the Course Error!</h2>
+            <p>Already Applied</p>
+          </div>
+        {% elif applied_successfully %}
+          <div class="col-lg-6 mx-auto">
+            <h1 class="display-1 mb-0">Done!</h1>
+            <h2 class="mb-4">Applied for the Course Succesfully!</h2>
+            <p>Wait for the Teacher to Approve your Application</p>
+          </div>
+        {% else %}
+            <p>Unknown error occurred.</p>
+        {% endif %}
+          <!-- <div class="col-lg-6 mx-auto">
+            <h1 class="display-1 mb-0">404</h1>
+            <h2 class="mb-4">Page Not Found!</h2>
+            <p>You seem to be trying to find this way home</p>
+            <a class="btn btn-primary mt-5 btn-rounded btn-lg" href="../../index.html">Back to home</a>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'node_modules/jquery/dist/jquery.min.js'  %}"></script>
+  <script src="{% static 'node_modules/popper.js/dist/umd/popper.min.js'  %}"></script>
+  <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js'  %}"></script>
+  <script src="{% static 'node_modules/chart.js/dist/Chart.min.js'  %}"></script>
+  <script src="{% static 'node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js'  %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5NXz9eVnyJOA81wimI8WYE08kW_JMe8g&callback=initMap" async defer></script>
+  <script src="{% static 'js/off-canvas.js'  %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js'  %}"></script>
+  <script src="{% static 'js/misc.js'  %}"></script>
+  <script src="{% static 'js/chart.js'  %}"></script>
+  <script src="{% static 'js/maps.js'  %}"></script>
+</body>
+
+</html>

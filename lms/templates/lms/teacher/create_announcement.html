@@ -1,0 +1,38 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <h3 class="page-heading mb-4">Announcement</h3>
+    <div class="row mb-2">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <form class="forms-sample" method="POST">
+              {% csrf_token  %}
+                <div class="form-group">
+                  <label for="exampleTextarea">Title</label>
+                  <input type="text" class="form-control p_input" name="title">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="exampleTextarea">Number of Items</label>
+                    <input type="number" min="5" class="form-control p_input" name="multiple_choice">
+                </div> -->
+                <!-- <div class="form-group">
+                    <label for="exampleTextarea">Module File</label>
+                    <input type="file" class="form-control p_input" placeholder="Module" name="module_file">
+                </div> -->
+                <div class="form-group">
+                  <label for="exampleTextarea">Description</label>
+                  <textarea class="form-control p_input" placeholder="Description" name="description" id="exampleTextarea" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block enter-btn">Add Announcement</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

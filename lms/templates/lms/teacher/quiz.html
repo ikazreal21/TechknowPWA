@@ -1,0 +1,34 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Quizzes</h5>
+          <a href="{% url 'create_quiz' course_code %}" class="btn btn-primary">Add Quiz</a>
+        </div>
+      </div>
+    </div>
+    {% for i in quiz %}
+        <div class="card-deck">
+            <div class="card col-lg-12 px-0 mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{i.name | title}}</h5>
+                <p>Number of Items: {{i.total_questions}}</p>
+                {% if i.is_active %}
+                    <a href="{% url 'lock_quiz' i.id %}" class="btn btn-primary mr-2">Lock Quiz</a>
+                {% else %}
+                    <a href="{% url 'unlock_quiz' i.id %}" class="btn btn-primary mr-2">Unlocked Quiz</a>
+                {% endif %}
+                <a href="{% url 'delete_quiz' i.id %}" class="btn btn-danger mr-2">Delete Quiz</a>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

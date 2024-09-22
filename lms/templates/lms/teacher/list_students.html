@@ -1,0 +1,47 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">List of Students</h5>
+          <a href="{% url 'pending_students' course_code %}" class="btn btn-warning">See Pending Students</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-deck">
+        <div class="card col-lg-12 px-0 mb-4">
+            <div class="card-body">
+                <h5 class="card-title">List of Students</h5>
+                <table class="table">
+                    <thead>
+                        <tr class="">
+                            <th>Student ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Birthday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in students %}
+                        <tr>
+                            <td>{{i.student_id}}</td>
+                            <td>{{i.first_name}}</td>
+                            <td>{{i.last_name}}</td>
+                            <td>{{i.get_gender_display}}</td>
+                            <td>{{i.date}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

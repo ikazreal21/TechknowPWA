@@ -1,0 +1,47 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    {% for announcement in global_announcement %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>{{ announcement.title | title }}</strong> {{ announcement.description }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    <h1>My Courses</h1>
+    {% for i in courses %}
+    <div class="card-deck">
+      <div class="card col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" style="min-height:395px;">
+        <div class="card-body">
+          <h5 class="card-title mb-4">{{ i.name | title }}</h5>
+          <div class="row d-flex align-items-center justify-items-center flex-column">
+            <div class="text-center">
+              <img src="{{ i.image.url }}" width="200" height="200" />
+            </div>
+            <p class="font-italic text-muted mt-3 mb-4 text-center">
+              {{ i.description }}
+            </p>
+            <a href="{% url 'teacher_course_detail' i.course_code %}" class="btn btn-info mr-2">View Course</a>
+            <button class="btn btn-secondary mt-2" onclick="copyToClipboard('{{ i.apply_link}}')">Copy Link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+  function copyToClipboard(link) {
+      navigator.clipboard.writeText(link).then(function() {
+          alert('Link copied to clipboard!');
+      }, function(err) {
+          console.error('Could not copy text: ', err);
+      });
+  }
+  </script>
+
+{% endblock %}

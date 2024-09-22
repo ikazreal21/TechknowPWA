@@ -42,6 +42,9 @@
                 <div class="form-group">
                   <input type="password" class="form-control p_input" placeholder="Password" name="password">
                 </div>
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary btn-block enter-btn">LOG IN</button>
                 </div>

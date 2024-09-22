@@ -1,0 +1,29 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper">
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Announcements</h5>
+          <a href="{% url 'create_announcement' course_code %}" class="btn btn-primary">Add Announcements</a>
+        </div>
+      </div>
+    </div>
+    {% for i in announcements %}
+        <div class="card-deck">
+            <div class="card col-lg-12 px-0 mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{i.title | title}}</h5>
+                <p>{{i.description}}</p>
+                <a href="{% url 'delete_announcement' i.id %}" class="btn btn-danger mr-2">Delete Announcement</a>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

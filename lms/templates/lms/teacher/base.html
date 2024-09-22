@@ -53,29 +53,29 @@
             <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed={{request.user.first_name}}" alt="Avatar">
             <p class="name">{{request.user.first_name | title }} {{request.user.last_name | title }}</p>
             {% if request.user.is_student %}
-            <p class="designation">Student</p>
+            <p class="designation">Teacher</p>
             {% endif %}
             <!-- <span class="online"></span> -->
           </div>
           <ul class="nav">
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'dashboard' %}">
+              <a class="nav-link" href="{% url 'teacher_dashboard' %}">
                 <img src="{% static 'images/icons/1.png'  %}" alt="">
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'profile' %}">
+              <a class="nav-link" href="{% url 'teacher_profile' %}">
                 <img src="{% static 'images/icons/2.png'  %}" alt="">
                 <span class="menu-title">Profile</span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="{% url '3d_game' %}">
                 <img src="{% static 'images/icons/005-forms.png'  %}" alt="">
-                <span class="menu-title">3D Room</span>
+                <span class="menu-title"></span>
               </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
               <a class="nav-link" href="pages/ui-elements/buttons.html">
                 <img src="{% static 'images/icons/4.png'  %}" alt="">
@@ -106,41 +106,36 @@
                 <span class="menu-title">Typography</span>
               </a>
             </li> -->
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#sample-pages" aria-expanded="false" aria-controls="sample-pages">
                 <img src="{% static 'images/icons/9.png'  %}" alt="">
-                <span class="menu-title">Sample Pages<i class="fa fa-sort-down"></i></span>
+                <span class="menu-title">Create<i class="fa fa-sort-down"></i></span>
               </a>
               <div class="collapse" id="sample-pages">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/samples/blank_page.html">
-                      Blank Page
+                    <a class="nav-link" href="">
+                      Course
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/samples/login.html">
-                      Login
+                    <a class="nav-link" href="">
+                      Quiz
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/samples/register.html">
-                      Register
+                    <a class="nav-link" href="">
+                      Activity
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="pages/samples/404.html">
-                      404
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="pages/samples/500.html">
-                      500
+                    <a class="nav-link" href="">
+                      Modules
                     </a>
                   </li>
                 </ul>
               </div>
-            </li> -->
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">
                 <img src="{% static 'images/icons/10.png'  %}" alt="">
