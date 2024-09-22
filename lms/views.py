@@ -82,13 +82,13 @@ def Dashboard(request):
         is_course_exist = Course.objects.filter(course_code=course_code).exists()
 
         if is_course_exist:
-            is_exist = CourseToStudent.objects.get(course_code=course_code, student_id=student_id)
+            is_exist = CourseToStudent.objects.filter(course_code=course_code, student_id=student_id).exists()
 
             if is_exist:
                 return redirect('dashboard')
             else:
                 CourseToStudent.objects.create(
-                    ciurse_code=course_code,
+                    course_code=course_code,
                     student_id=student_id
                 )
         return redirect('dashboard')
