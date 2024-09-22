@@ -594,8 +594,8 @@ def AssetLink(request):
             "relation": ["delegate_permission/common.handle_all_urls"],
             "target": {
             "namespace": "android_app",
-            "package_name": "xyz.appmaker.zacrfh",
-            "sha256_cert_fingerprints": ["0F:A1:A9:0E:25:08:3D:BD:60:BB:FC:5C:E4:76:BB:85:08:E6:C1:71:DF:21:C6:90:61:1D:28:A2:5D:88:C2:07"]
+            "package_name": "xyz.appmaker.yiwvwg",
+            "sha256_cert_fingerprints": ["75:44:B1:7B:3C:AA:A1:67:DC:44:B8:F5:6B:F6:D6:2D:10:4C:7F:20:BC:05:E2:FC:44:96:22:07:AD:1F:A6:6B"]
             }
         }
     ]
@@ -604,5 +604,5 @@ def AssetLink(request):
 
 def generate_apply_course_link(course_code):
     base_url = "https://techknow.ellequin.com/"
-    return f"{base_url}apply_course/{course_code}/"
+    return f"{base_url}apply_course/{course_code}"
 

@@ -35,7 +35,9 @@
           <h5 class="card-title mb-4">{{i.name | title }}</h5>
           <div class="row d-flex align-items-center justify-items-center flex-column">
             <div class="text-center">
+              {% if i.image %}
               <img src="{{i.image.url}}" width="200" height="200" />
+              {% endif %}
             </div>
             <!-- <div class="text-center mt-3">
               <i class="fa fa-quote-right icon-grey-big"></i>
