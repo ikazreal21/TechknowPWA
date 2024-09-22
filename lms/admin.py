@@ -10,11 +10,11 @@ from admin_interface.models import Theme
 class UserAdminConfig(UserAdmin):
     model = CustomUser
     search_fields = ('username', 'email')
-    list_filter = ('first_name', 'is_active', 'is_staff', 'gender', 'birth_date')
-    list_display = ('username', 'id', 'email','is_active', 'is_staff', 'gender', 'birth_date', 'is_student', 'total_points')
+    list_filter = ('first_name', 'is_active', 'is_staff', 'gender', 'birth_date', 'is_teacher', 'is_student')
+    list_display = ('username', 'id', 'email','is_active', 'is_staff', 'gender', 'birth_date', 'is_student', 'is_teacher', 'total_points')
     fieldsets = (
-        (None, {'fields': ('first_name', 'last_name', 'username', 'email', 'password', 'gender', 'birth_date', 'student_id', 'total_points')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_student')}),
+        (None, {'fields': ('first_name', 'last_name', 'username', 'email', 'password', 'gender', 'birth_date', 'student_id', 'total_points',)}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_student', 'is_teacher')}),
     )
     formfield_overrides = {
         models.TextField: {'widget': Textarea(attrs={'rows': 20, 'cols': 60})}
@@ -25,6 +25,8 @@ class UserAdminConfig(UserAdmin):
             {
                 'classes': ('wide',),
                 'fields': (
+                    'first_name', 
+                    'last_name',
                     'username',
                     'email',
                     'password1',
@@ -35,7 +37,8 @@ class UserAdminConfig(UserAdmin):
                     'image',
                     'is_active',
                     'is_staff',
-                    'is_student'
+                    'is_student',
+                    'is_teacher'
                 ),
             },
         ),

@@ -1,0 +1,57 @@
+{% extends 'lms/teacher/base.html' %} 
+
+{% load static %} 
+{% block content %} 
+
+<div class="content-wrapper" style="text-align: center;">
+    <!-- {% for announcement in announcements %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>{{announcement.title | title}}</strong> {{announcement.description}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %} -->
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Modules</h5>
+          <a href="{% url 'teacher_modules' course.course_code %}" class="btn btn-primary mr-2">View Modules</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+        <div class="card col-lg-12 px-0 mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Quiz</h5>
+            <a href="{% url 'teacher_quiz' course.course_code %}" class="btn btn-primary mr-2">View Quiz</a>
+          </div>
+        </div>
+    </div>
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Announcement</h5>
+          <a href="{% url 'course_announcement' course.course_code %}" class="btn btn-primary mr-2">View Announcement</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">List of Students</h5>
+          <a href="{% url 'list_students' course.course_code %}" class="btn btn-primary mr-2">View Students</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-deck">
+      <div class="card col-lg-12 px-0 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Leaderboards</h5>
+          <a href="{% url 'leaderboard' course.course_code %}" class="btn btn-primary mr-2">View Leaderboards</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

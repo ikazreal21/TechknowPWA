@@ -1,4 +1,4 @@
-{% extends 'lms/base.html' %} 
+{% extends 'lms/teacher/base.html' %} 
 
 {% load static %} 
 {% block content %} 
@@ -31,12 +31,6 @@
                   <label for="exampleTextarea">BirthDate</label>
                   <input type="date" class="form-control p_input" placeholder="Username" name="birth_date" value="{{request.user.birth_date}}">
                 </div>
-                {%  if request.user.is_student %}
-                <div class="form-group">
-                  <label for="exampleTextarea">Student ID</label>
-                  <input type="text" class="form-control p_input" placeholder="Student ID" name="student_id" value="{{request.user.student_id}}">
-                </div>
-                {% endif %}
                 <button type="submit" class="btn btn-primary btn-block enter-btn">Update</button>
             </form>
           </div>
