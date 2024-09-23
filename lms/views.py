@@ -247,8 +247,9 @@ def SubmitQuiz(request, quiz_id):
         questions = MultipleChoice.objects.filter(id__in=question_ids)
 
         # Check each submitted answer
-        for idx, question in enumerate(questions, start=1):
+        for question in questions:
             user_answer = request.POST.get(f'answer_{question.id}')
+            print(f'Question {question.id}: {question.question} - User Answer: {user_answer} - Correct Answer: {question.answer}')
             if user_answer == question.answer:
                 correct_answers += 1
 
