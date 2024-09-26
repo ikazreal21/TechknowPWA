@@ -1,16 +1,43 @@
+<!-- templates/virtual_room.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Bean Avatar with Texture</title>
+    <script async defer src="https://tianji.ellequin.com/tracker.js" data-website-id="cm1c5dceaa7op14h9l2z1c3uv"></script>
+    <title>Preview Virtual Room</title>
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; }
+        /* Ensure the viewer takes full width and height, and scales properly */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        spline-viewer {
+            display: block;
+            width: 100vw;
+            height: 100vh; /* Full height on any screen size */
+        }
+
+        @media (max-width: 768px) {
+            spline-viewer {
+                height: 100vh; /* Full height for mobile screens */
+            }
+        }
     </style>
 </head>
+
 <body>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.26/build/spline-viewer.js"></script>
-    <spline-viewer url="https://prod.spline.design/Klr-ReH9h-XxXUmZ/scene.splinecode"></spline-viewer>
+    <!-- Display the Spline viewer with the determined URL -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.27/build/spline-viewer.js"></script>
+    <spline-viewer hint loading-anim-type="spinner-small-dark" url="{{ room_url }}"></spline-viewer>
+    
+    
+    <!-- Display current total points -->
+    <div style="position: absolute; top: 10px; left: 10px; color: white; font-size: 24px;">
+        Total Points: {{ total_points }}
+    </div>
 </body>
 </html>

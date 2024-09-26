@@ -160,6 +160,8 @@ class ResultsQuiz(models.Model):
 
 #     def __str__(self):
 #         return f"{self.name}"
+    class Meta:
+        verbose_name_plural = "Results Quizzes"
 
 class ThreeDRoom(models.Model):
     name = models.CharField(max_length=50)

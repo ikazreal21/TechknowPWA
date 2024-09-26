@@ -255,19 +255,20 @@ def SubmitQuiz(request, quiz_id):
 
         # Calculate score as a percentage
         score = (correct_answers / total_questions) * 100
+        earn_points = correct_answers * 0.05
         user = request.user
-        user.total_points += correct_answers
+        user.total_points += earn_points
         user.save()
         
         # Save the result
         ResultsQuiz.objects.create(
             student_id=request.user.student_id,
             quiz=quiz,
-            score=correct_answers,
+            score=earn_points,
             course_code=quiz.course.course_code
         )
         
-        return render(request, 'lms/student/quiz_results.html', {'quiz': quiz, 'score': score})
+        return render(request, 'lms/student/quiz_results.html', {'quiz': quiz, 'score': score, 'earn_points': earn_points})
 
     return redirect('quiz_detail', quiz_id=quiz_id)
 
@@ -308,14 +309,31 @@ ROOMS = [
 
 
 
+ROOMS2 = [
+    (105, 'https://prod.spline.design/uDxyYJtrbVh0ylgM/scene.splinecode'),  # Basic Room
+    (110, 'https://prod.spline.design/I9FQq9z3rGOsmRIu/scene.splinecode'),  # Only the PC
+    (120, 'https://prod.spline.design/5scUgBZMtYVYaLf5/scene.splinecode'),  # No Music Box
+    (130, 'https://prod.spline.design/B4g31xStfGKK4Hf4/scene.splinecode'),  # No Wall Deco
+    (140, 'https://prod.spline.design/7Umbii56CzIoUrm3/scene.splinecode'),  # No Trash and Speaker
+    (150, 'https://prod.spline.design/h02X43pscxz1snxJ/scene.splinecode'),  # No Floor Deco
+    (160, 'https://prod.spline.design/s9S2Y8hx5jj4n7eI/scene.splinecode'),  # No Guitar
+    (170, 'https://prod.spline.design/GfaktHDvHB-TUCEH/scene.splinecode'),  # No Chair Room
+    (180, 'https://prod.spline.design/BzZsVF4PHfrGp56a/scene.splinecode'),  # No Lamp Room
+    (190, 'https://prod.spline.design/a-y4N5U38kxq-0t3/scene.splinecode')   # Finish Room
+]
+
+
+
 # 3D Game
 @login_required(login_url='login')
 def Game3D(request):
     total_points = request.user.total_points
 
+    all_rooms = ROOMS + ROOMS2
+
     # Determine the room to display based on total points
     room_url = ROOMS[0][1]  # Default to Basic Room
-    for points, url in ROOMS:
+    for points, url in all_rooms:
         if total_points >= points:
             room_url = url
 
@@ -607,3 +625,20 @@ def generate_apply_course_link(course_code):
     base_url = "https://techknow.ellequin.com/"
     return f"{base_url}apply_course/{course_code}"
 
+
+
+def test_game(request, room_number):
+    room_number = int(room_number)
+    if room_number == 1:
+        room_url = 'https://prod.spline.design/a7GTFzRLRz6DkNfd/scene.splinecode'
+    elif room_number == 2:
+        room_url = 'https://prod.spline.design/a-y4N5U38kxq-0t3/scene.splinecode'
+    
+    context = {
+        'room_url': room_url
+    }
+    return render(request, 'lms/3d/dashboard-test.html', context)
+
+
+def preview_game(request):
+    return render(request, 'lms/student/room_preview.html')

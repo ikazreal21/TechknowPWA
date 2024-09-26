@@ -61,6 +61,9 @@ urlpatterns = [
     # path("teacher/quiz_results/<str:quiz_id>", views.QuizResults, name="quiz_results"),
     path("teacherprofile/", views.TeacherProfile, name="teacher_profile"),
 
+    path("test_game/<str:room_number>", views.test_game, name="test_game"),
+    path("preview_game/", views.preview_game, name="preview_game"),
+
 
     # Auth
     path("login/", views.Login, name="login"),
