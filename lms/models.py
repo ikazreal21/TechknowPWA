@@ -147,6 +147,7 @@ class ResultsQuiz(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True, blank=True)
     course_code = models.CharField(max_length=50)
     score = models.IntegerField(default=0)
+    correct_answers = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
