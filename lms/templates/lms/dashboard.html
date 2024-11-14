@@ -5,52 +5,149 @@
 
 <div class="content-wrapper">
     {% for announcement in global_announcement %}
-      <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong>{{announcement.title | title}}</strong> {{announcement.description}}
+      <div class="alert alert-info alert-dismissible fade show rounded-lg shadow-lg" role="alert">
+        <strong>{{ announcement.title | title }}</strong> {{ announcement.description }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
     {% endfor %}
+    
     <div class="card-deck">
-      <div class="card col-lg-12 px-0 mb-4">
-        <div class="card-body">
+      <div class="card col-lg-12 px-0 mb-4 rounded-lg shadow-lg">
+        <div class="card-body text-center">
           <h5 class="card-title">Courses</h5>
           <form class="forms-sample" method="POST">
             {% csrf_token  %}
               <div class="form-group">
-                <input type="text" class="form-control p_input" placeholder="Course Code" name="course_code" >
+                <input type="text" class="form-control p_input neon-input" placeholder="Course Code" name="course_code">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary mr-2">Add Course</button>
+                <button type="submit" class="btn btn-primary pop-btn">Add Course</button>
               </div>
           </form>
         </div>
       </div>
     </div>
-    {% for i in courses  %}
+
+    {% for i in courses %}
     <div class="card-deck">
-      <div class="card col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" style="min-height:395px;">
-        <div class="card-body">
-          <h5 class="card-title mb-4">{{i.name | title }}</h5>
-          <div class="row d-flex align-items-center justify-items-center flex-column">
-            <div class="text-center">
-              {% if i.image %}
-              <img src="{{i.image.url}}" width="200" height="200" />
-              {% endif %}
-            </div>
-            <!-- <div class="text-center mt-3">
-              <i class="fa fa-quote-right icon-grey-big"></i>
-            </div> -->
-            <p class="font-italic text-muted mt-3 mb-4 text-center">
-              {{i.description }}
-            </p>
-            <a href="{% url 'course_details' i.course_code %}" class="btn btn-info mr-2">View Course</a>
+      <div class="card col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4 rounded-lg shadow-lg neon-card" style="min-height:395px;">
+        <div class="card-body text-center">
+          <h5 class="card-title mb-4">{{ i.name | title }}</h5>
+          <div class="text-center">
+            {% if i.image %}
+              <img src="{{ i.image.url }}" width="200" height="200" class="rounded-circle neon-img" />
+            {% endif %}
           </div>
+          <p class="font-italic text-muted mt-3 mb-4">{{ i.description }}</p>
+          <a href="{% url 'course_details' i.course_code %}" class="btn btn-info pop-btn">View Course</a>
         </div>
       </div>
     </div>
-    {% endfor  %}
-
+    {% endfor %}
 </div>
+
+<style>
+  /* General Styling */
+.content-wrapper {
+    padding: 20px;
+}
+
+/* Alert Styling */
+.alert {
+    background-color: #242424;
+    color: #00cfff;
+    font-size: 1.1rem;
+    border: 2px solid #00cfff;
+    border-radius: 20px; /* Increased for rounder corners */
+    transition: all 0.3s ease-in-out;
+}
+
+.alert strong {
+    color: #00aaff;
+}
+
+.alert:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 207, 255, 0.3);
+}
+
+/* Neon Input Styling */
+.neon-input {
+    background-color: #1e1e1e;
+    color: #00cfff;
+    border: 2px solid #00cfff;
+    border-radius: 20px; /* Increased for rounder corners */
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.neon-input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 207, 255, 0.5);
+}
+
+/* Card Styling */
+.neon-card {
+    background-color: #1e1e1e;
+    border: 2px solid #00cfff;
+    color: #e0e0e0;
+    border-radius: 20px; /* Increased for rounder corners */
+    transition: all 0.3s ease-in-out;
+}
+
+.neon-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 207, 255, 0.3);
+}
+
+/* Card Title */
+.card-title {
+    font-size: 1.5rem;
+    color: #00cfff;
+}
+
+/* Neon Image Styling */
+.neon-img {
+    border: 2px solid #00cfff;
+    box-shadow: 0 4px 10px rgba(0, 207, 255, 0.3);
+}
+
+/* Button Styling */
+.pop-btn {
+    border-radius: 30px; /* Increased for rounder corners */
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #00cfff;
+    color: #e0e0e0;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.pop-btn:hover {
+    transform: scale(1.1);
+    background-color: #007bbf;
+}
+
+.pop-btn:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.pop-btn:hover:after {
+    opacity: 1;
+}
+</style>
+
 {% endblock %}

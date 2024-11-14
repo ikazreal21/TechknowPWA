@@ -1,33 +1,110 @@
-{% extends 'lms/base.html' %} 
+{% extends 'lms/base.html' %}
 
-{% load static %} 
-{% block content %} 
+{% load static %}
+{% block content %}
 
-<div class="content-wrapper" style="text-align: center;">
+<div class="content-wrapper text-center">
     {% for announcement in announcements %}
-      <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <div class="alert alert-info alert-dismissible fade show neon-alert" role="alert">
         <strong>{{announcement.title | title}}</strong> {{announcement.description}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-    {% endfor %}
-    <div class="card-deck">
-      <div class="card col-lg-12 px-0 mb-4">
-        <div class="card-body">
-          <h5 class="card-title">3D Room 1</h5>
-          <a href="{% url 'test_game' 1 %}" class="btn btn-primary mr-2">Preview</a>
-        </div>
-      </div>
     </div>
+    {% endfor %}
+    
     <div class="card-deck">
-        <div class="card col-lg-12 px-0 mb-4">
-          <div class="card-body">
-            <h5 class="card-title">3D Room 2</h5>
-            <a href="{% url 'test_game' 2 %}" class="btn btn-primary mr-2">Preview</a>
-          </div>
+        <div class="card col-lg-12 px-0 mb-4 neon-card">
+            <div class="card-body text-center">
+                <h5 class="card-title">3D Room 1</h5>
+                <a href="{% url 'test_game' 1 %}" class="btn btn-primary neon-btn mr-2">Preview</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-deck">
+        <div class="card col-lg-12 px-0 mb-4 neon-card">
+            <div class="card-body text-center">
+                <h5 class="card-title">3D Room 2</h5>
+                <a href="{% url 'test_game' 2 %}" class="btn btn-primary neon-btn mr-2">Preview</a>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* General Neon Styling */
+.content-wrapper {
+    padding: 20px;
+}
+
+/* Alert Styling */
+.neon-alert {
+    font-size: 1.1rem;
+    background-color: #242424;
+    color: #00cfff;
+    border: 2px solid #00cfff;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.alert-info {
+    background-color: #00cfff;
+    color: #ffffff;
+}
+
+.alert strong {
+    color: #ffffff;
+}
+
+/* Card Styling */
+.neon-card {
+    background-color: #1e1e1e;
+    border: 2px solid #00cfff;
+    color: #e0e0e0;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(0, 207, 255, 0.3);
+}
+
+.neon-card:hover {
+    transform: scale(1.05);
+}
+
+/* Button Styling */
+.neon-btn {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #00cfff;
+    color: #ffffff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.neon-btn:hover {
+    transform: scale(1.1);
+    background-color: #007bbf;
+}
+
+.neon-btn:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.neon-btn:hover:after {
+    opacity: 1;
+}
+</style>
 
 {% endblock %}

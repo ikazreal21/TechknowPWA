@@ -5,17 +5,17 @@
 
 <div class="content-wrapper">
     <div class="card-deck">
-        <div class="card col-lg-12 px-0 mb-4">
-            <div class="card-body">
+        <div class="card col-lg-12 px-0 mb-4 rounded-lg shadow-lg">
+            <div class="card-body text-center">
                 <h5 class="card-title">Leaderboards</h5>
                 <!-- Display logged-in student's current rank and score -->
                 {% if student_rank and student_score %}
-                <div class="alert alert-info">
+                <div class="alert alert-info rounded-lg shadow-lg">
                     <h3><strong>Your Current Rank: {{ student_rank }}</strong></h3><br>
                     <h5><strong>Your Total Earned Points: {{ student_score }}</strong></h5>
                 </div>
                 {% else %}
-                <div class="alert alert-warning">
+                <div class="alert alert-warning rounded-lg shadow-lg">
                     <strong>You have not participated in any quizzes yet.</strong>
                 </div>
                 {% endif %}
@@ -24,10 +24,10 @@
     </div>
 
     <div class="card-deck">
-        <div class="card col-lg-12 px-0 mb-4">
+        <div class="card col-lg-12 px-0 mb-4 rounded-lg shadow-lg neon-card">
             <div class="card-body">
-                <h5 class="card-title">Leaderboards</h5>
-                <table class="table">
+                <h5 class="card-title text-center">Leaderboards</h5>
+                <table class="table neon-table">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -38,8 +38,8 @@
                     </thead>
                     <tbody>
                         {% for i in students %}
-                        <tr {% if i.student_id == request.user.student_id %} class="table-info" {% endif %}>
-                            <td>{{ i.rank }}</td> <!-- Display rank -->
+                        <tr {% if i.student_id == request.user.student_id %} class="highlight-row" {% endif %}>
+                            <td>{{ i.rank }}</td>
                             <td>{{ i.student_id }}</td>
                             <td>{{ i.first_name }}</td>
                             <td>{{ i.total_score }}</td>
@@ -51,5 +51,114 @@
         </div>
     </div>
 </div>
+
+<style>
+  /* General Styling */
+.content-wrapper {
+    padding: 20px;
+}
+
+/* Alert Styling */
+.alert {
+    font-size: 1.1rem;
+    background-color: #242424;
+    color: #00cfff;
+    border: 2px solid #00cfff;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.alert-info {
+    background-color: #00cfff;
+    color: #ffffff;
+}
+
+.alert-warning {
+    background-color: #ffaa00;
+    color: #ffffff;
+}
+
+.alert strong {
+    color: #ffffff;
+}
+
+/* Card Styling */
+.neon-card {
+    background-color: #1e1e1e;
+    border: 2px solid #00cfff;
+    color: #e0e0e0;
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.neon-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 207, 255, 0.3);
+}
+
+/* Table Styling */
+.neon-table {
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.neon-table th, .neon-table td {
+    padding: 12px;
+    text-align: center;
+    border: none;
+    color: #00cfff;
+}
+
+.neon-table th {
+    font-size: 1.2rem;
+    background-color: #242424;
+}
+
+.highlight-row {
+    background-color: #00cfff;
+    color: #ffffff;
+}
+
+.highlight-row td {
+    font-weight: bold;
+}
+
+/* Button Styling */
+.pop-btn {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #00cfff;
+    color: #e0e0e0;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.pop-btn:hover {
+    transform: scale(1.1);
+    background-color: #007bbf;
+}
+
+.pop-btn:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.pop-btn:hover:after {
+    opacity: 1;
+}
+</style>
 
 {% endblock %}
