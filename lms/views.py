@@ -255,7 +255,7 @@ def SubmitQuiz(request, quiz_id):
 
         # Calculate score as a percentage
         score = (correct_answers / total_questions) * 100
-        earn_points = correct_answers * 0.05
+        earn_points = round(correct_answers * 0.5)
         user = request.user
         user.total_points += earn_points
         user.save()
@@ -265,6 +265,7 @@ def SubmitQuiz(request, quiz_id):
             student_id=request.user.student_id,
             quiz=quiz,
             score=earn_points,
+            correct_answers=correct_answers,
             course_code=quiz.course.course_code
         )
         

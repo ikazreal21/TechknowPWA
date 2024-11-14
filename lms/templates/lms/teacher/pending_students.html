@@ -35,9 +35,7 @@
                             <td>{{i.first_name}}</td>
                             <td>{{i.last_name}}</td>
                             <td>{{i.get_gender_display}}</td>
-                            <td>{{i.date}}</td>
                             <td><a href="{% url 'approve_student' course_code i.student_id %}" class="btn btn-outline-success btn-sm">Approve</a></td>
-
                         </tr>
                         {% endfor %}
                     </tbody>
