@@ -27,30 +27,33 @@
         <div class="card col-lg-12 px-0 mb-4 rounded-lg shadow-lg neon-card">
             <div class="card-body">
                 <h5 class="card-title text-center">Leaderboards</h5>
-                <table class="table neon-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Student ID</th>
-                            <th>First Name</th>
-                            <th>Total Earned Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in students %}
-                        <tr {% if i.student_id == request.user.student_id %} class="highlight-row" {% endif %}>
-                            <td>{{ i.rank }}</td>
-                            <td>{{ i.student_id }}</td>
-                            <td>{{ i.first_name }}</td>
-                            <td>{{ i.total_score }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table neon-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Student ID</th>
+                                <th>First Name</th>
+                                <th>Total Earned Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in students %}
+                            <tr {% if i.student_id == request.user.student_id %} class="highlight-row" {% endif %}>
+                                <td>{{ i.rank }}</td>
+                                <td>{{ i.student_id }}</td>
+                                <td>{{ i.first_name }}</td>
+                                <td>{{ i.total_score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <style>
   /* General Styling */
