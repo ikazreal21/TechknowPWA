@@ -15,6 +15,38 @@ def create_rand_id():
             allowed_chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
 
 
+STRAND_CHOICES = [
+    ('STEM', 'STEM'),
+    ('ABM', 'ABM'),
+    ('HUMMS', 'HUMMS'),
+    ('TVL', 'TVL'),
+]
+
+YEAR_CHOICES = [
+    ('GRADE_11', 'Grade 11'),
+    ('GRADE_12', 'Grade 12'),
+]
+
+SEMESTER_CHOICES = [
+    ('Y1', 'Year 1'),
+    ('Y2', 'Year 2'),
+]
+
+
+class Subject(models.Model):
+    name = models.CharField(max_length=255)
+
+
+    def __str__(self):
+        return self.name
+    
+class Section(models.Model):
+    name = models.CharField(max_length=255)
+
+
+    def __str__(self):
+        return self.name
+    
 class CustomUser(AbstractUser):
     GENDER = (
         ("Male", "Male"),
@@ -42,6 +74,10 @@ class CustomUser(AbstractUser):
 
 class Course(models.Model):
     name = models.CharField(max_length=50)
+    strand = models.CharField(max_length=10, choices=STRAND_CHOICES)
+    year = models.CharField(max_length=10, choices=YEAR_CHOICES)
+    semester = models.CharField(max_length=10, choices=SEMESTER_CHOICES)
+    sections = models.ForeignKey(Section, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField()
     image = models.ImageField(upload_to='uploads/course', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -52,7 +88,7 @@ class Course(models.Model):
     course_code = models.CharField(max_length=50, default=create_rand_id, unique=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.strand} {self.year}-{self.semester}-{self.sections}"
 
 class CourseToStudent(models.Model):
     course_code = models.CharField(max_length=50, null=True, blank=True)

@@ -58,6 +58,8 @@ admin.site.register(TrueFalse)
 admin.site.register(FillInTheBlank)
 admin.site.register(ResultsQuiz)
 admin.site.register(ThreeDRoom)
+admin.site.register(Section)
+admin.site.register(Subject)
 
 
 admin.site.site_title = "Techknow Admin"
