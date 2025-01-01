@@ -64,6 +64,9 @@ urlpatterns = [
     path("test_game/<str:room_number>", views.test_game, name="test_game"),
     path("preview_game/", views.preview_game, name="preview_game"),
 
+    # Admin
+    path("admin-dashboard/", views.admin_dashboard, name="admin_dashboard"),
+
 
     # Auth
     path("login/", views.Login, name="login"),

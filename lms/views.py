@@ -643,3 +643,7 @@ def test_game(request, room_number):
 
 def preview_game(request):
     return render(request, 'lms/student/room_preview.html')
+
+
+def admin_dashboard(request):
+    return render(request, 'lms/admin_side/admin_dashboard.html')
