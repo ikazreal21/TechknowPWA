@@ -348,9 +348,10 @@ def Game3D(request):
 @login_required(login_url='login')
 def TeacherDashboard(request):
     user = CustomUser.objects.get(id=request.user.id)
-    teacher_courses = Course.objects.filter(created_by=user)
+    # teacher_courses = Course.objects.filter(created_by=user)
+    teacher_courses = CoursetoProf.objects.filter(professor=user)
     
-    for course in teacher_courses:
+    for course in teacher_courses.course:
         course.apply_link = generate_apply_course_link(course.course_code)
 
     context = {
